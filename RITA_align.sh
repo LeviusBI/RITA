@@ -1,13 +1,23 @@
 #!/bin/bash
 
-#!/bin/bash
+srrNumber=""
+findFlag=false
+existingFlag=false
+notDownloadFlag=false
+r1=""
+r2=""
 
-# Set the path to the data folder, files with paired reads for Nth sample should be 
-# formatted as N_anyname_R1_001.fastq.gz and N_anyname_R2_001.fastq.gz
-DATA=~/GBM
-# Set the path to the hg38 human genome with latest Ensembl gene set
-GENOME=~/Human_genome
 
+usage() {
+    echo "usage: $0 --srrNumber <SRA number> [--find] [--existing] [--notDownload] [-r1 <*.fastq.gz>] [-r2 <fastq.gz>]"
+    echo "  --srrNumber <number>   (obligatory) SRA id to download via fasterq-dump, create folders for fastp reports and STAR alignments"
+    echo "  --find                Starts RITA_find.sh by the end of RITA_align.sh script"
+    echo "  --existing            Use this flag to specify that you want to find only existing isoforms"
+    echo "  --notDownload         Use this flag if you have already downloaded your data and you want to skip downloading stage"
+    echo "  -r1 <*.fastq.gz>            Only with --nowDownload flag: "
+    echo "  -r2 <*.fastq.gz>            Указывает второй файл."
+    exit 1
+}
 
 # FASTP 0.23.4
 FASTP=~/fastp
