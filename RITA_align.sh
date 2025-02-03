@@ -139,15 +139,19 @@ min=$(( number1 < number2 ? number1 : number2 ))
 
 READLEN=$((min_number - 1))
 
-mkdir "$RITA"/STAR_results/"$srrNumber"
+mkdir -p "$RITA"/STAR_results/"$srrNumber"/genomeDir
 
-GENDIR="$RITA"/STAR_results/"$srrNumber"
+GENDIR="$RITA"/STAR_results/"$srrNumber"/genomeDir
+
+gunzip "$RITA"/refs/*
 
 ulimit -n 65535
 
-"$STAR"  --runMode genomeGenerate   --runThreadN "$threads"   --genomeDir "$GENDIR"   --genomeFastaFiles referneces/Homo_sapiens.GRCh38.dna.primary_assembly.fa      --sjdbGTFfile referneces/Homo_sapiens.GRCh38.112.gtf   --sjdbOverhang 99
+cd "$RITA"/STAR_restults/"$srrNumber"
 
-$STAR --genomeDir ./genomeDir/ --readFilesCommand zcat --readFilesIn ./FASTQ_files/TRIMMED_SRR25_1.fastq.gz ./FASTQ_files/TRIMMED_SRR25_2.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 128000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN 100
+"$STAR" --runMode genomeGenerate --runThreadN "$threads" --genomeDir "$GENDIR" --genomeFastaFiles "$RITA"/refs/Homo_sapiens.GRCh38.dna.toplevel.fa --sjdbGTFfile "$RITA"/refs/Homo_sapiens.GRCh38.113.gtf --sjdbOverhang $READLEN
+
+"$STAR" --genomeDir "$GENDIR" --outFileNamePrefix "$srrNumber" --readFilesCommand zcat --readFilesIn _1_TRIMMED.fastq.gz ./FASTQ_files/_2_TRIMMED.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN $threads
 
 
 

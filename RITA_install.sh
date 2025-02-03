@@ -38,7 +38,7 @@ cd $RITA/refs
 
 
 GENOMEFA=Homo_sapiens.GRCh38.dna.toplevel.fa
-GENOMEGTF=Homo_sapiens.GRCh38.113.chr_patch_hapl_scaff.gtf
+GENOMEGTF=Homo_sapiens.GRCh38.113.gtf
 GENOMEFAURL=https://ftp.ensembl.org/pub/release-113/fasta/homo_sapiens/dna/${GENOMEFA}.gz
 GENOMEGTFURL=https://ftp.ensembl.org/pub/release-113/gtf/homo_sapiens/${GENOMEGTF}.gz
 
