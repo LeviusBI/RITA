@@ -135,7 +135,7 @@ numbers=($( grep 'read1_mean_length' $json_rep | grep -o '[0-9]\{2,3\}' ))
 number1=${numbers[0]}
 number2=${numbers[1]}
 
-min=$(( number1 < number2 ? number1 : number2 ))
+min_number=$(( number1 < number2 ? number1 : number2 ))
 
 
 READLEN=$((min_number - 1))
@@ -154,10 +154,14 @@ ulimit -n 65535
 
 cd "$RITA"/STAR_restults/"$srrNumber"
 
-"$STAR" --genomeDir "$GENDIR" --outFileNamePrefix "$srrNumber" --readFilesCommand zcat --readFilesIn "$RITA"/reads/"$srrNumber"/*_1_TRIMMED.fastq.gz "$RITA"/reads/"$srrNumber"/*_2_TRIMMED.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN $threads
+"$STAR" --genomeDir "$GENDIR" --readFilesCommand zcat --readFilesIn "$RITA"/reads/"$srrNumber"/*_1_TRIMMED.fastq.gz "$RITA"/reads/"$srrNumber"/*_2_TRIMMED.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN "$threads"
 
 cd $RITA
 
-$STRINGTIE
+mkdir -p "$RITA"/stringtie_results/"$srrNumber"
+
+"$STRINGTIE" -p "$threads" -G "$RITA"/refs/Homo_sapiens.GRCh38.113.gtf -o $RITA/stringtie/"$srrNumber"/"$srrNumber"_result.gtf $RITA/STAR_results/"$srrNumber"/Aligned.sortedByCoord.out.bam
+
+"$STRINGTIE" -p "$threads" -e -G "$RITA"/stringtie/"$srrNumber"/"$srrNumber"_result.gtf -o "$RITA"/stringtie/"$srrNumber"/"$srrNumber"_result_calc_cov.gtf
 
 
