@@ -50,8 +50,9 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo "Неизвестный флаг: $1"
+            echo "Unknown flag: $1"
             usage
+            exit 1
             ;;
     esac
 done
@@ -86,12 +87,12 @@ echo "noGenDir: $noGenDir"
 echo "r1: $r1"
 echo "r2: $r2"
 
-
+RITA=~/rita
 
 FASTERQ=$RITA/tools/sratoolkit.3.2.0-ubuntu64/bin/fasterq-dump
 FASTP=$RITA/tools/fastp
 STAR=$RITA/tools/STAR-2.7.11b/bin/Linux_x86_64/STAR
-STRINGTIE=$RITA/tools/
+STRINGTIE=$RITA/tools/stringtie/stringite
 
 mkdir $RITA/reads/$srrNumber
 mkdir $RITA/fastp_reports/$srrNumber
@@ -147,50 +148,16 @@ gunzip "$RITA"/refs/*
 
 ulimit -n 65535
 
-cd "$RITA"/STAR_restults/"$srrNumber"
+
 
 "$STAR" --runMode genomeGenerate --runThreadN "$threads" --genomeDir "$GENDIR" --genomeFastaFiles "$RITA"/refs/Homo_sapiens.GRCh38.dna.toplevel.fa --sjdbGTFfile "$RITA"/refs/Homo_sapiens.GRCh38.113.gtf --sjdbOverhang $READLEN
 
-"$STAR" --genomeDir "$GENDIR" --outFileNamePrefix "$srrNumber" --readFilesCommand zcat --readFilesIn _1_TRIMMED.fastq.gz ./FASTQ_files/_2_TRIMMED.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN $threads
+cd "$RITA"/STAR_restults/"$srrNumber"
+
+"$STAR" --genomeDir "$GENDIR" --outFileNamePrefix "$srrNumber" --readFilesCommand zcat --readFilesIn "$RITA"/reads/"$srrNumber"/*_1_TRIMMED.fastq.gz "$RITA"/reads/"$srrNumber"/*_2_TRIMMED.fastq.gz --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within --twopassMode Basic --quantMode TranscriptomeSAM --outSAMstrandField intronMotif --runThreadN $threads
+
+cd $RITA
+
+$STRINGTIE
 
 
-
-
-
-
-
-# # Set length of reads, in case of variable length set the maximum length
-# READLEN=151 
-# # Set number of threads used
-# THREADNUM=100
-
-# # Set higher ulimit for STAR BAM sorting
-# ulimit -n 65535
-
-# # Download and ungzip genome files
-# mkdir $GENOME
-# wget -P $GENOME $GENOMEFAURL $GENOMEGTFURL
-# wget -P $GENOME $TRANSCRIPTSURL $GENOMEFAURL
-# gunzip ${GENOME}/*
-
-
-
-# # Generate STAR genome index
-# $STAR --runThreadN $THREADNUM --runMode genomeGenerate --genomeDir $GENOME --genomeFastaFiles ${GENOME}/$GENOMEFA --sjdbGTFfile ${GENOME}/$GENOMEGTF --sjdbOverhang $READLEN-1
-
-# # Loop through the paired files
-
-# for f in /mnt/raid/zherem/output_2/good_trim_*.fastq #..12}
-# do
-# 	# Get the file name
-# 	xbase=${f##*/}
-# 	R=${xbase%.*}
-
-# 	# Trim the reads using fastq
-# 	$FASTP -w $THREADNUM -i $R1 -I $R2 -o TRIMMED_${i}_R1_001.fastq.gz -O TRIMMED_${i}_R2_001.fastq.gz -j FASTP_${i}_report.json -h FASTP_${i}_report.html
-	
-
-# 	# Align the trimmed reads using STAR
-# 	$STAR --runThreadN $THREADNUM --outSAMtype BAM SortedByCoordinate --genomeDir $GENOME --readFilesIn TRIMMED_${i}_R1_001.fastq.gz TRIMMED_${i}_R2_001.fastq.gz --readFilesCommand zcat --outFileNamePrefix STAR_${i}_
-
-# done

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir ~/RITA
+mkdir ~/rita
 
-RITA=~/RITA
+RITA=~/rita
 
 cd $RITA
 
