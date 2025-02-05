@@ -94,10 +94,12 @@ FASTP=$RITA/tools/fastp
 STAR=$RITA/tools/STAR-2.7.11b/bin/Linux_x86_64/STAR
 STRINGTIE=$RITA/tools/stringtie/stringite
 
-mkdir $RITA/reads/$srrNumber
-mkdir $RITA/fastp_reports/$srrNumber
+mkdir -p $RITA/reads/$srrNumber
+mkdir -p $RITA/fastp_reports/$srrNumber
 
-$FASTERQ -p --split-files $srrNumber -O $RITA/reads/$srrNumber
+"$FASTERQ" -p --split-files "$srrNumber" -O $RITA/reads/"$srrNumber" 
+
+
 
 cd $RITA/reads/$srrNumber
 
