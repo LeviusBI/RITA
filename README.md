@@ -1,6 +1,6 @@
 # RITA
 
-**R**eveal new **I**soforms by **T**ranscripts **A**lignment
+**R**eveal **I**soforms by **T**ranscripts **A**lignment
 
 # RITA_install.sh
 This script creates ~/rita directory, in which all tools, references, intermediate files and result files are stored. Created dirs:
