@@ -14,7 +14,7 @@ r2=""
 
 # Функция для вывода справки
 usage() {
-    echo "Использование: $0 --srrNumber <номер> --threads <количество> [--find] [--existing] [--notDownload -r1 <файл1> -r2 <файл2>] [--noGen <директория>]"
+    echo "Usage: $0 --srrNumber <номер> --threads <количество> [--find] [--existing] [--notDownload -r1 <файл1> -r2 <файл2>] [--noGen <директория>]"
     exit 1
 }
 
@@ -52,7 +52,6 @@ while [[ $# -gt 0 ]]; do
         *)
             echo "Unknown flag: $1"
             usage
-            exit 1
             ;;
     esac
 done
@@ -89,7 +88,7 @@ echo "r2: $r2"
 
 RITA=~/rita
 
-FASTERQ=$RITA/tools/sratoolkit.3.2.0-ubuntu64/bin/fasterq-dump
+FASTERQ=$RITA/tools/sratoolkit.3.0.0-ubuntu64/bin/fasterq-dump
 FASTP=$RITA/tools/fastp
 STAR=$RITA/tools/STAR-2.7.11b/bin/Linux_x86_64/STAR
 STRINGTIE=$RITA/tools/stringtie/stringite
