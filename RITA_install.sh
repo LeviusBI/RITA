@@ -10,7 +10,7 @@ mkdir refs reads tools fastp_reports STAR_results stringtie_results isoforms
 
 cd $RITA/tools
 
-wget --output-document sratoolkit.tar.gz https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.2.0/sratoolkit.3.2.0-ubuntu64.tar.gz
+wget --output-document sratoolkit.tar.gz https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.0.0/sratoolkit.3.0.0-ubuntu64.tar.gz
 tar -vxzf sratoolkit.tar.gz
 rm -rf sratoolkit.tar.gz
 
