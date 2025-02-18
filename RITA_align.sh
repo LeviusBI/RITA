@@ -127,6 +127,6 @@ mkdir -p $RITA/stringtie_results/$srrNumber
 
 "$STRINGTIE" -p "$threads" -G $RITA/refs/Homo_sapiens.GRCh38.113.gtf -o $RITA/stringtie_results/$srrNumber/"$srrNumber"_result.gtf $RITA/STAR_results/$srrNumber/Aligned.sortedByCoord.out.bam
 
-"$STRINGTIE" -p "$threads" -e -G $RITA/stringtie/$srrNumber/"$srrNumber"_result.gtf -o $RITA/stringtie/$srrNumber/"$srrNumber"_result_calc_cov.gtf
+"$STRINGTIE" -p "$threads" -e -G $RITA/stringtie_results/$srrNumber/"$srrNumber"_result.gtf -o $RITA/stringtie_results/$srrNumber/"$srrNumber"_result_calc_cov.gtf
 
 
