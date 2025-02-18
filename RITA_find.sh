@@ -7,7 +7,7 @@ end=""
 strand=""
 
 usage() {
-    echo "usage: $0 --chr <> --start <xxxxxxxx> --end <xxxxxxxx> --strand <+/->"
+    echo "usage: $0 --file <path to file> --chr <> --start <xxxxxxxx> --end <xxxxxxxx> --strand <+/->"
     exit 1
 }
 
@@ -47,6 +47,6 @@ dir_name=$(basename "$file" .gtf)
 
 mkdir "$RITA"/isoforms/"$dir_name"
 
-awk -v chr="$chr" -v start="$start" -v end="$end" -v strand="$strand" '\$1 == chr && \$4 >= start && \$5 <= end && \$7 == strand' "$file" > "$RITA"/isoforms/"$dir_name"/filtered_output.gtf
+awk "$1 == $chr && $4 >= $start && $5 <= $end && $7 == $strand" "$file" > "$RITA"/isoforms/"$dir_name"/filtered_output.gtf
 
 "$RITA/tools/gffread/gffread" -g "$RITA"/refs/Homo_sapiens.GRCh38.dna.toplevel.fa -w "$RITA"/isoforms/"$dir_name"/transcripts.fa "$RITA"/isoforms/"$dir_name"/filtered_output.gtf
