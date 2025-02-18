@@ -37,4 +37,8 @@ First it will create ```$srrNumber``` directory in reads and fastp_reports dirs.
 
 # RITA_find.sh
 
+```
+./RITA_find.sh --file ~RITA/stringtie_results/SRR123456/SRR123456_result_calc_cov.gtf --chr 2 --start 42100000 --end 42200000 --strand +
+```
+
 It takes chr number (like 1, 2, 3 etc), then start position of region of interes, the end position, then strand (+ or -) and the last argument is a '.gtf' file from RITA_align.sh. RITA_find,sh creates corresponding dir in isoforms, then it parse gtf file with awk, creating new gtf file only with those transcripts which are into the region of interest. Then it uses gffread to convert them into nucleotide sequences from reference genome in ~RITA/isoforms/$dir_name/transcripts.fa file.
