@@ -5,12 +5,12 @@ F=""
 R=""
 threads=""
 findFlag=false
-noGenDir=""
+noGenDir=0
 srrNumber=""
 
 
 usage() {
-	echo "Usage: $0 -F <path to forward *.fastq> -R <path to reverse *.fastq> -S SRR number -t <number of threds to use> [-f start RITA_find.sh by the end of RITA_align.sh] [-G full path to STAR genomeDir]"
+	echo "Usage: $0 -F <path to forward *.fastq> -R <path to reverse *.fastq> -S SRR number -t <number of threds to use> [-G full path to STAR genomeDir]"
     exit 1
 }
 
@@ -30,14 +30,6 @@ while [[ $# -gt 0 ]]; do
 		;;		
         -t)
             	threads="$2"
-            	shift 2
-            	;;
-        -f)
-            	findFlag=true
-            	shift
-            	;;
-    	-G)
-            	noGenDir="$2"
             	shift 2
             	;;
         *)
